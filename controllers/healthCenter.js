@@ -154,7 +154,7 @@ const listHealthCenter = async(req, res) => {
       return d;
     }
 
-    const healthCenterList = await healthCenterModel.find({_id: req.params.healthCenterId})
+    const healthCenterList = await healthCenterModel.find({name: new RegExp(req.params.healthCenterName, 'i')})
       
     let result = []
 
