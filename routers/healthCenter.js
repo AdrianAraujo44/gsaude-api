@@ -24,7 +24,7 @@ router.post("/listMedicines/:healthCenterId", async(req,res) => {
   healthCenterController.listMedicine(req,res)
 })
 
-router.get("/listHealthCenter/:healthCenterName", async(req,res) => {
+router.post("/listHealthCenter/:healthCenterName", async(req,res) => {
   healthCenterController.listHealthCenter(req,res)
 })
 

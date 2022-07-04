@@ -151,7 +151,7 @@ const listHealthCenter = async(req, res) => {
         Math.sin(dLon / 2) * Math.sin(dLon / 2);
       var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
       var d = R * c; // Distance in KM
-      return d;
+      return d.toFixed(1);
     }
 
     const healthCenterList = await healthCenterModel.find({name: new RegExp(req.params.healthCenterName, 'i')})
@@ -161,11 +161,11 @@ const listHealthCenter = async(req, res) => {
     for(let hc of healthCenterList) {
       if(req.body.latitude == undefined || req.body.longitude == undefined) {
         result.push({ name: hc.name, latitude: hc.latitude, longitude: hc.longitude, 
-                      message: "não foi possível calcular a distância" })
+                      distance: "não foi possível calcular a distância" })
       } else {
         result.push({ name: hc.name, latitude: hc.latitude, longitude: hc.longitude, 
-                      distance: getDistance(parseFloat(req.body.latitude), parseFloat(req.body.longitude), 
-                      parseFloat(hc.latitude), parseFloat(hc.longitude)) })
+                      distance: `${getDistance(parseFloat(req.body.latitude), parseFloat(req.body.longitude), 
+                      parseFloat(hc.latitude), parseFloat(hc.longitude))}km de distância de você` })
       }
     }
     
