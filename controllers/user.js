@@ -199,7 +199,6 @@ const getNotifications = async(req,res) => {
 
 const addNotification = async(req, res) => {
   const user_result = await userModel.findOne({ _id : req.body.userId }) 
-  console.log(user_result)
 
   if(user_result == null) {
     res.status(200).json({type:"alerta", message: "O usuário não existe"})
