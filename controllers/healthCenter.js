@@ -109,23 +109,54 @@ const listMedicine = async(req, res) => {
   
   try {
     const healthCenterResult = await healthCenterModel.findOne({_id: req.params.healthCenterId})
-    console.log(healthCenterResult)
+    //console.log(healthCenterResult)
     if(healthCenterResult == null) {
       res.status(500).json({ type: "error", message: "Nao existem esse posto"})
     } else {
       if(req.body.type == 'available') {
         const available_medicines = await healthCenterResult.medicines.filter((e) => e.situation == "available")
-        res.status(200).json(available_medicines)
+
+        let result = [...available_medicines]
+
+        for(var i = 0; i < available_medicines.length; i++) {
+          const temporary_search = await medicineModel.findOne({ _id : available_medicines[i].medicine})
+          result[i].name = temporary_search.name
+        }
+
+        res.status(200).json(result)
 
       } else if(req.body.type == 'missing') {
         const missing_medicines = await healthCenterResult.medicines.filter((e) => e.situation == "missing")
+
+        let result = [...missing_medicines]
+
+        for(var i = 0; i < missing_medicines.length; i++) {
+          const temporary_search = await medicineModel.findOne({ _id : missing_medicines[i].medicine})
+          result[i].name = temporary_search.name
+        }
+
         res.status(200).json(missing_medicines)
 
       } else if(req.body.type == 'coming') {
         const coming_medicines = await healthCenterResult.medicines.filter((e) => e.situation == "coming")
+
+        let result = [...coming_medicines]
+
+        for(var i = 0; i < coming_medicines.length; i++) {
+          const temporary_search = await medicineModel.findOne({ _id : coming_medicines[i].medicine})
+          result[i].name = temporary_search.name
+        }
+
         res.status(200).json(coming_medicines)
-      }else {
-        res.status(200).json(healthCenterResult.medicines)
+      } else {
+        let result = [...healthCenterResult.medicines]
+
+        for(var i = 0; i < healthCenterResult.medicines.length; i++) {
+          const temporary_search = await medicineModel.findOne({ _id : healthCenterResult.medicines[i].medicine})
+          result[i].name = temporary_search.name
+        }
+
+        res.status(200).json(result)
       }
     }
   }catch(err) {
