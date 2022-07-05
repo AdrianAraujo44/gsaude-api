@@ -134,6 +134,7 @@ const listMedicine = async(req, res) => {
 }
 
 const listHealthCenter = async(req, res) => {
+  console.log(req.body);
   try {
     function deg2rad(deg) {
       return deg * (Math.PI / 180)
@@ -163,7 +164,7 @@ const listHealthCenter = async(req, res) => {
       } else {
         result.push({ name: hc.name, latitude: hc.latitude, longitude: hc.longitude, 
                       distance: getDistance(parseFloat(req.body.latitude), parseFloat(req.body.longitude), 
-                      parseFloat(hc.latitude), parseFloat(hc.longitude)) })
+                      parseFloat(hc.latitude), parseFloat(hc.longitude)), id:  hc._id})
       }
     }
     
