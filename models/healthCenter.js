@@ -32,6 +32,10 @@ const HealthCenterSchema = new Schema ({
   },
   medicines: [
     {
+      name : {
+        type: String,
+        required: true
+      },
       medicine: {
         type: Schema.ObjectId,
         ref: "Medicine"
