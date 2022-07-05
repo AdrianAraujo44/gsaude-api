@@ -1,6 +1,11 @@
 const router = require('express').Router()
 const { userController } = require("../controllers/user")
 
+// Add notifications
+router.post("/addNotification", async(req,res) => {
+  userController.addNotification(req, res);
+})
+
 // Login
 router.post("/login", async(req,res) => {
   userController.login(req,res)
