@@ -68,7 +68,8 @@ const updateAmountMedicine = async(req,res) => {
       },
         {
           '$set': {
-            'medicines.$.amountAvailable': req.body.amount
+            'medicines.$.amountAvailable': req.body.amount,
+            'medicines.$.situation': 'available'
           }
         }
       )
@@ -94,12 +95,12 @@ const getAmountMedicines = async(req,res) => {
       type:"success",
       data: {
         available: medicineAvailable.length,
-        coming: medicineComing.length,
-        missing: medicineMissing.length
+        coming:    medicineComing.length,
+        missing:   medicineMissing.length
       }
     })
 
-  }catch(err) {
+  } catch(err) {
     res.status(500).json(err)
     console.log(err)
   }
@@ -109,12 +110,14 @@ const listMedicine = async(req, res) => {
   
   try {
     const healthCenterResult = await healthCenterModel.findOne({_id: req.params.healthCenterId})
-    //console.log(healthCenterResult)
     if(healthCenterResult == null) {
       res.status(500).json({ type: "error", message: "Nao existem esse posto"})
     } else {
       if(req.body.type == 'available') {
         const available_medicines = await healthCenterResult.medicines.filter((e) => e.situation == "available")
+        
+        // AINDA VOU CORRIGIR ISSO AQUI
+        //console.log(available_medicines[0].populate({ path:'medicine', select: 'name'}));
 
         let result = [...available_medicines]
 
