@@ -160,12 +160,19 @@ const listHealthCenter = async(req, res) => {
 
     for(let hc of healthCenterList) {
       if(req.body.latitude == undefined || req.body.longitude == undefined) {
-        result.push({ name: hc.name, latitude: hc.latitude, longitude: hc.longitude, 
-                      distance: "não foi possível calcular a distância" })
+        result.push({ 
+          _id: hc._id,
+          name: hc.name, 
+          latitude: hc.latitude, 
+          longitude: hc.longitude, 
+          distance: "não foi possível calcular a distância" })
       } else {
-        result.push({ name: hc.name, latitude: hc.latitude, longitude: hc.longitude, 
-                      distance: `${getDistance(parseFloat(req.body.latitude), parseFloat(req.body.longitude), 
-                      parseFloat(hc.latitude), parseFloat(hc.longitude))}km de distância de você` })
+        result.push({ 
+          _id: hc._id,
+          name: hc.name, 
+          latitude: hc.latitude, 
+          longitude: hc.longitude, 
+          distance: `${getDistance(parseFloat(req.body.latitude), parseFloat(req.body.longitude),parseFloat(hc.latitude), parseFloat(hc.longitude))}km de distância de você` })
       }
     }
     
