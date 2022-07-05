@@ -219,7 +219,7 @@ const addNotification = async(req, res) => {
       arr_temp.push(req.body.healthCenter_id)
 
       await userModel.updateOne({ _id: req.body.userId }, {
-        notifications : [ ...user_result.notifications, { medicine: req.body.medicine_id, healthCenter: arr_temp } ]
+        notifications : [ { medicine: req.body.medicine_id, healthCenter: arr_temp } ]
       })
     }
 
