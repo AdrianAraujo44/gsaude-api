@@ -197,12 +197,43 @@ const getNotifications = async(req,res) => {
   }
 }
 
+const addNotification = async(req, res) => {
+  const user_result = await userModel.findOne({ _id : req.body.userId }) 
+
+  if(user_result == null) {
+    res.status(200).json({type:"alerta", message: "O usuário não existe"})
+  } else {
+    let notif_result = user_result.notifications.find(e => e.medicine == req.body.medicine_id)
+    
+    let arr_temp = []
+    if(notif_result == null || notif_result?.length == 0) {
+      arr_temp.push({ medicine : req.body.medicine_id, healthCenter : req.body.healthCenter_id })
+
+      await userModel.updateOne({ _id: req.body.userId }, {
+        notifications : [...user_result.notifications, ...arr_temp ]
+      })
+
+    } else {  
+      arr_temp = [...notif_result.healthCenter]
+
+      arr_temp.push(req.body.healthCenter_id)
+
+      await userModel.updateOne({ _id: req.body.userId }, {
+        notifications : [ { medicine: req.body.medicine_id, healthCenter: arr_temp } ]
+      })
+    }
+
+    res.status(200).json({ message: "notificacão adicionada com sucesso", type: "sucesso" })
+  }
+}
+
 const userController = {
   login,
   newUser,
   sendCodeVerificationToUser,
   validateVerificationCode,
-  getNotifications
+  getNotifications,
+  addNotification
 }
 
 module.exports = { userController }

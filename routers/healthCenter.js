@@ -20,4 +20,16 @@ router.get("/getAmountMedicines/:healthCenterId", async(req,res) => {
   healthCenterController.getAmountMedicines(req,res)
 })
 
+router.post("/listMedicines/:healthCenterId", async(req,res) => {
+  healthCenterController.listMedicine(req,res)
+})
+
+router.post("/listHealthCenter/:healthCenterName", async(req,res) => {
+  healthCenterController.listHealthCenter(req,res)
+})
+
+router.post("/searchMedicine/:healthCenterId", async(req,res) => {
+  healthCenterController.searchMedicine(req,res)
+})
+
 module.exports = router

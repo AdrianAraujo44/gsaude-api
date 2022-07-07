@@ -25,4 +25,8 @@ router.get("/getNotifications/:userId", async(req,res) => {
   userController.getNotifications(req,res)
 })
 
+router.post("/addNotification", async(req,res) => {
+  userController.addNotification(req,res)
+})
+
 module.exports = router
