@@ -10,7 +10,7 @@ const login = async(req,res) => {
     const credential = await credentialsModel.findOne({ email: req.body.email })
     
     if(credential === null) {
-      res.status(200).json({type:'warning', message: "Usuário ou senha incorreto"})
+      res.status(200).json({type:'warning', message: "Email ou senha incorreto"})
     }else {
       const validPassword = await bcrypt.compare(req.body.password, credential.password)
       if(!validPassword) {
